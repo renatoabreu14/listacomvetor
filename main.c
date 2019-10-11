@@ -31,6 +31,33 @@ void adicionarNoInicio(struct lista *l, int valor){
     }
 }
 
+void adicionarNoFim(struct lista *l, int valor){
+    l->ultimo++;
+    l->lista[l->ultimo] = valor;
+}
+
+void removerNoFim(struct lista *l){
+    if (!listaVazia(*l)) {
+        l->lista[l->ultimo] = NULL;
+        l->ultimo--;
+    }else{
+        printf("Lista vazia");
+    }
+}
+
+void removerNoInicio(struct lista *l){
+    int i;
+    if (!listaVazia(*l)) {
+        for (i = 0; i < l->ultimo ; i++){
+            l->lista[i] = l->lista[i+1];
+        }
+        l->lista[l->ultimo] = NULL;
+        l->ultimo--;
+    }else{
+        printf("Lista vazia");
+    }
+}
+
 void exibirLista(struct lista l){
     if (listaVazia(l)){
         printf("Lista vazia");
@@ -49,8 +76,11 @@ int main() {
     do {
         printf("1 - Inicializa lista\n");
         printf("2 - Adiciona no inicio\n");
-        printf("3 - Exibir lista\n");
-        printf("4 - Sair\n");
+        printf("3 - Adiciona no fim\n");
+        printf("4 - Remove no inicio\n");
+        printf("5 - Remove no fim\n");
+        printf("6 - Exibir lista\n");
+        printf("7 - Sair\n");
         printf("\nInforme a opcao desejada:");
         scanf("%i", &opcao);
         switch (opcao){
@@ -66,11 +96,26 @@ int main() {
                 break;
             }
             case 3:{
+                int valor;
+                printf("Informe o valor:");
+                scanf("%i", &valor);
+                adicionarNoFim(&l1, valor);
+                break;
+            }
+            case 4:{
+                removerNoInicio(&l1);
+                break;
+            }
+            case 5:{
+                removerNoFim(&l1);
+                break;
+            }
+            case 6:{
                 exibirLista(l1);
                 break;
             }
         }
-    }while(opcao != 4);
+    }while(opcao != 7);
 
 
 
