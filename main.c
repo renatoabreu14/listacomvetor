@@ -48,8 +48,10 @@ void removerNoFim(struct lista *l){
 void removerNoInicio(struct lista *l){
     int i;
     if (!listaVazia(*l)) {
-        for (i = 0; i < l->ultimo ; i++){
-            l->lista[i] = l->lista[i+1];
+        if (l->ultimo != 0) {
+            for (i = 0; i < l->ultimo + 1; i++) {
+                l->lista[i] = l->lista[i + 1];
+            }
         }
         l->lista[l->ultimo] = NULL;
         l->ultimo--;
@@ -69,6 +71,31 @@ void exibirLista(struct lista l){
     }
 }
 
+int buscaValor(struct lista l, int valor){
+    int i;
+    for(i = 0; i < l.ultimo+1; i++){
+        if (l.lista[i] == valor){
+            return i;
+        }
+    }
+    return -1;
+}
+
+void removerPorPosicao(struct lista *l, int pos){
+    int i;
+    if (!listaVazia(*l)) {
+        if (l->ultimo != 0) {
+            for (i = pos; i < l->ultimo + 1; i++) {
+                l->lista[i] = l->lista[i + 1];
+            }
+        }
+        l->lista[l->ultimo] = NULL;
+        l->ultimo--;
+    }else{
+        printf("Lista vazia");
+    }
+}
+
 int main() {
     struct lista l1;
     int opcao;
@@ -79,8 +106,9 @@ int main() {
         printf("3 - Adiciona no fim\n");
         printf("4 - Remove no inicio\n");
         printf("5 - Remove no fim\n");
-        printf("6 - Exibir lista\n");
-        printf("7 - Sair\n");
+        printf("6 - Remove por busca\n");
+        printf("7 - Exibir lista\n");
+        printf("8 - Sair\n");
         printf("\nInforme a opcao desejada:");
         scanf("%i", &opcao);
         switch (opcao){
@@ -111,11 +139,23 @@ int main() {
                 break;
             }
             case 6:{
+                int valor;
+                printf("Informe o valor:");
+                scanf("%i", &valor);
+                int pos = buscaValor(l1, valor);
+                if (pos == -1){
+                    printf("Valor não encontrado");
+                }else{
+                    removerPorPosicao(&l1, pos);
+                }
+                break;
+            }
+            case 7:{
                 exibirLista(l1);
                 break;
             }
         }
-    }while(opcao != 7);
+    }while(opcao != 8);
 
 
 
