@@ -96,6 +96,16 @@ void removerPorPosicao(struct lista *l, int pos){
     }
 }
 
+void removeTodasOcorrencias(struct lista *l, int valor){
+    int i;
+    for(i = 0; i < l->ultimo+1; i++){
+        if (l->lista[i] == valor){
+            removerPorPosicao(l, i);
+            i--;
+        }
+    }
+}
+
 int main() {
     struct lista l1;
     int opcao;
@@ -107,8 +117,9 @@ int main() {
         printf("4 - Remove no inicio\n");
         printf("5 - Remove no fim\n");
         printf("6 - Remove por busca\n");
-        printf("7 - Exibir lista\n");
-        printf("8 - Sair\n");
+        printf("7 - Remove por busca todas ocorrencias\n");
+        printf("8 - Exibir lista\n");
+        printf("9 - Sair\n");
         printf("\nInforme a opcao desejada:");
         scanf("%i", &opcao);
         switch (opcao){
@@ -151,13 +162,17 @@ int main() {
                 break;
             }
             case 7:{
+                int valor;
+                printf("Informe o valor:");
+                scanf("%i", &valor);
+                removeTodasOcorrencias(&l1, valor);
+                break;
+            }
+            case 8:{
                 exibirLista(l1);
                 break;
             }
         }
-    }while(opcao != 8);
-
-
-
+    }while(opcao != 9);
     return 0;
 }
